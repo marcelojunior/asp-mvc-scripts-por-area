@@ -1,0 +1,66 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("Application name", "Index", "Home", null, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("Home", "Index", "Home", new { Area = "" }, null)</li>
+                    <li>@Html.ActionLink("About", "About", "Home", new { Area = "" }, null)</li>
+                    <li>@Html.ActionLink("Contact", "Contact", "Home", new { Area = "" }, null)</li>
+                    <li>@Html.ActionLink("Produção", "Index", "Home", new { Area = "Producao" }, null)</li>
+                    <li>@Html.ActionLink("Outro Teste", "Index", "OutroTeste", new { Area = "Producao" }, null)</li>
+                    <li>@Html.ActionLink("Sem Arquivo", "Index", "SemArquivo", new { Area = "Producao" }, null)</li>
+                </ul>
+  
+            </div>
+        </div>
+    </div>
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @*@Scripts.Render("~/bundles/bootstrap")*@
+
+    @*Verifica se é uma área ou não, para poder adicionar os bundles da área e controladores*@
+
+    @{
+        string Area = (string)@ViewContext.RouteData.DataTokens["area"];
+        string Controller = (string)@ViewContext.RouteData.Values["controller"];
+    }
+
+    @if (Area.IsEmpty())
+    {
+        @Scripts.Render(string.Format("~/bundles/{0}", Controller));
+    }
+    else
+    {
+        @Scripts.Render(string.Format("~/bundles/{0}/{1}", Area, Controller));
+    }
+
+    @RenderSection("scripts", required: false)
+</body>
+</html>
+       
+
